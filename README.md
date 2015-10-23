@@ -1,0 +1,3 @@
+PROJECT 4 : Map Application with Leaflet --- TREVOR JONES CS 399 FALL 2015
+
+This repository contains a single webpage which loads a map application using Leaflet and a plugin from MapQuest Geocode. The user can interact with the map in the same manner they can on the typical main mapquest or google maps apps. They are able to place markers through clicks or taps, and then display addresses at the markers. Size of map: 1000px, 520px

@@ -1,0 +1,48 @@
+<!--CS 322 Project 4: FALL 2015 --- TREVOR JONES
+This webpage loads a leaflet map application that uses MapQuest to browse the planet.
+The user can place marks anywhere on the map by clicking or tapping and can doso again to open the address of the location.
+-->
+<html>
+    <head>
+        <!--Load Leaflet librarys-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.js"></script>
+
+	<!-- Load MapQuest Maps plugin -->
+        <script src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-map.js?key=y4uOgAX8hc0JRj2epQGcdcZqWRJg40PY"></script>
+        <script src="https://www.mapquestapi.com/sdk/leaflet/v2.s/mq-geocoding.js?key=y4uOgAX8hc0JRj2epQGcdcZqWRJg40PY"></script>
+
+        <script type="text/javascript">
+            window.onload = function() {
+		
+		var popup = L.popup();
+		//loads geocode to display user friendly addresses based on coords in our popup
+		var geocode = MQ.geocode().on('success', function(e) {
+  		    popup.setContent(geocode.describeLocation(e.result.best));
+		});
+
+		/*-- map - creates the map and applies initial attributes:
+			setView to Eugene OR
+			on click or tap run function():
+				geocode.reverse
+				L.marker - creates marker with following attributes:
+				clickable, 'O' icon(Go Ducks), popup with address*/
+		var map = L.map('map', { layers: MQ.mapLayer(), tap: true})
+				.setView([44.052069, -123.086754], 13).on('click', function(e) {
+   											geocode.reverse(e.latlng);
+   											L.marker([ ], { clickable: true })
+												.setIcon(L.icon({ iconUrl: '\o.png', iconSize: [ 28, 22 ] }))
+												.setLatLng(e.latlng)
+												.addTo(map)
+												.bindPopup(popup)
+												.on('click', function(e) { L.marker.togglePopup(); });
+		});
+            }
+        </script>
+    </head>
+
+    <body style='border:0; margin: 0'>
+	<!-- Load map in div with id 'map'-->
+        <div id='map' style='width:1000px; height:520px;'></div>
+    </body>
+</html>
